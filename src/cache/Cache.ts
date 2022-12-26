@@ -17,3 +17,8 @@ export function existsInCache(key: string): boolean
 {
     return cache.get(key) != null;
 }
+
+export function flushCache(): void
+{
+    return cache.flushAll();
+}
