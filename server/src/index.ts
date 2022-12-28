@@ -1,13 +1,13 @@
 import 'reflect-metadata'
 
 import { createExpressServer, useContainer } from 'routing-controllers';
-import { Express, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Container } from 'typedi';
 
 import { MovieController } from './controller/MovieController';
  
 
-const PORT = 5002;
+const PORT = process.env.PORT || 5002;
 
 const routes = [MovieController];
 
@@ -19,10 +19,12 @@ const app = createExpressServer(
     }
 );
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+app.get('/health', (req: Request, res: Response) => {
+  res.sendStatus(200);
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
 });
+
+export { app, server };

@@ -6,6 +6,6 @@ export class constants {
         },
     };
 
-    public static readonly KEY_PREFIX = "movie";
+    public static readonly KEY_PREFIX = "mvid:";
 }
 
