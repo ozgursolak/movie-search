@@ -15,6 +15,7 @@ useContainer(Container);
 
 const app = createExpressServer(
     {
+        cors: true,
         controllers: routes,
     }
 );
