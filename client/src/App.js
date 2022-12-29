@@ -23,7 +23,9 @@ const App = () => {
 	useEffect(() => {
     if(searchValue.length > 2)
     {
-    	getMovieRequest(searchValue);
+		setTimeout(() => {
+			getMovieRequest(searchValue);
+		}, 300);
     }
 	}, [searchValue]);
 
