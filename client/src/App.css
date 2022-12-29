@@ -6,7 +6,6 @@ body {
 .movie-app > .column {
 	overflow-x: auto;
 	flex-wrap: wrap;
-	flex: 0 0 33.333333%;
 }
 
 .image-container {
