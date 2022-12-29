@@ -12,6 +12,7 @@ export class MovieService {
         const key = constants.KEY_PREFIX.concat(keyword);
         let movies: Array<object> = null;
         let errorMessage: string = null;
+       
         if (existsInCache(key))
         {
             movies = getFromCache(key);
@@ -31,9 +32,9 @@ export class MovieService {
                 console.info(`Error in getMovies ${JSON.stringify(error)}`);
                 errorMessage = error.message;
             }
-
-            return this.serializeResponseForClient(movies, errorMessage);
         }
+
+        return this.serializeResponseForClient(movies, errorMessage);
     }
 
     serializeResponseForClient(movies: Array<object>, errorMessage: string): MovieResponse
