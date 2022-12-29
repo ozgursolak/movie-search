@@ -7,7 +7,7 @@ import { Container } from 'typedi';
 import { MovieController } from './controller/MovieController';
  
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.SERVER_PORT || 5002;
 
 const routes = [MovieController];
 
