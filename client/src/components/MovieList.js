@@ -14,7 +14,7 @@ const MovieList = (props) => {
 				<div className="col-md-4">
 					<div className='image-container d-flex justify-content-start m-3'>
 						<figure>
-							<img src={movie.Poster ? movie.Poster : placeholderImage} alt='movie' onError={onImageError}></img>
+							<img class="movie-img" src={movie.Poster ? movie.Poster : placeholderImage} alt='movie' onError={onImageError}></img>
 							<figcaption>{movie.Title}</figcaption>
 						</figure>
 					</div>

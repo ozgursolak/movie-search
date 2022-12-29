@@ -1,9 +1,9 @@
 body {
-	background: #141414;
+	background: black;
 	color: #ffffff;
 }
 
-.movie-app > .column {
+.movie-app > .column { 
 	overflow-x: auto;
 	flex-wrap: wrap;
 }
@@ -32,4 +32,16 @@ body {
 	font-size: 20px;
 	padding: 20px;
 	text-align: center;
+}
+
+.movie-img {
+    height: 300px;
+    width: 200px;
+}
+
+figcaption {
+    display: block;
+	font-weight: bold;
+	text-align: center;
+	border: 1px dotted  grey;
 }
