@@ -11,7 +11,7 @@ const App = () => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const getMovieRequest = async (searchValue) => {
-		const url = `http://localhost:5002/movies?keyword=${searchValue}`;
+		const url = `http://localhost:${process.env.REACT_APP_SERVER_PORT}/movies?keyword=${searchValue}`;
 
 		const response = await fetch(url);
 		const responseJson = await response.json();
