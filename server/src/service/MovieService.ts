@@ -19,17 +19,21 @@ export class MovieService {
         } 
         else
         {
-            const url = constants.MOVIE_URL.concat("&").concat(`s="${keyword}"`).concat("&").concat(`page=${page}`);
+            const url = constants.MOVIE_URL.concat("&").concat(`s="${keyword}"`).concat("&");
             try
             {
-                const response = await axios.get(url, constants.MOVIE_HEADER);
-                movies = response.data.Search || [];
+                const response = await Promise.all([
+                    axios.get(url.concat(`page=${page}`), constants.MOVIE_HEADER),
+                    axios.get(url.concat(`page=${page + 1}`), constants.MOVIE_HEADER)
+                ]);
                 
+                movies = (response[0].data.Search || []).concat((response[1].data.Search) || []);
+            
                 addCache(key, movies);
             }
             catch(error)
             {
-                console.info(`Error in getMovies ${JSON.stringify(error)}`);
+                console.info(`Error in getMovies ${error}`);
                 errorMessage = error.message;
             }
         }

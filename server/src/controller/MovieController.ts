@@ -13,7 +13,7 @@ export class MovieController {
 
   
   @Get('/movies')
-  async getMovies(@QueryParam("keyword") keyword: string, @QueryParam("page") page: number): Promise<MovieResponse>
+  async getMovies(@QueryParam("keyword") keyword: string): Promise<MovieResponse>
   {
     let response: MovieResponse;
 
@@ -26,7 +26,7 @@ export class MovieController {
     }
     else
     {
-      response = await this.movieService.getMovies(keyword.trim(), page);
+      response = await this.movieService.getMovies(keyword.trim());
     }
     
     return response;
