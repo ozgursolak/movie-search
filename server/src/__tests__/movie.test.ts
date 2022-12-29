@@ -1,5 +1,5 @@
 import { server } from "../index";
-import {constants} from "../constant/Constant";
+import { constants } from "../constant/Constant";
 
 const request = require("supertest");
 const nock = require("nock");
@@ -51,8 +51,15 @@ describe("Movies Test Suites", () => {
     expect(result.is_success).toBe(true);
   });
 
-  it("should not return movies", async () => {
-      // TODO
+  it("should return false for invalid keyword", async () => {
+    const response = await request(server).get("/movies?keywor=test");
+    const result = JSON.parse(response.text);
+    const expectedResult = {
+      "is_success": false,
+      "message": "Invalid keyword type",
+    };
+   
+    expect(result).toStrictEqual(expectedResult);
   });
 });
 

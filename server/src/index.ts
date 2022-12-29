@@ -1,10 +1,10 @@
-import 'reflect-metadata'
+import "reflect-metadata"
 
-import { createExpressServer, useContainer } from 'routing-controllers';
-import { Request, Response } from 'express';
-import { Container } from 'typedi';
+import { createExpressServer, useContainer } from "routing-controllers";
+import { Request, Response } from "express";
+import { Container } from "typedi";
 
-import { MovieController } from './controller/MovieController';
+import { MovieController } from "./controller/MovieController";
  
 
 const PORT = process.env.SERVER_PORT || 5002;
@@ -20,7 +20,7 @@ const app = createExpressServer(
     }
 );
 
-app.get('/health', (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 

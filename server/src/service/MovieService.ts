@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 import { Service } from "typedi";
 
-import { constants } from '../constant/Constant';
-import { addCache, existsInCache, getFromCache } from '../cache/Cache';
+import { constants } from "../constant/Constant";
+import { addCache, existsInCache, getFromCache } from "../cache/Cache";
 import { MovieResponse } from "../model/response/MovieResponse";
 
 @Service()
