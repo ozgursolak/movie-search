@@ -1,8 +1,12 @@
-import { server } from "../index";
-import { constants } from "../constant/Constant";
 
 const request = require("supertest");
 const nock = require("nock");
+
+import { server } from "../index";
+import { constants } from "../constant/Constant";
+import * as cacheModule from "../cache/Cache";
+import { Method } from "axios";
+
 
 describe("Health Check Test Suites", () => {
   
@@ -19,26 +23,33 @@ describe("Health Check Test Suites", () => {
 });
 
 describe("Movies Test Suites", () => {
-  const expectedResposnse = [
+  const expectedResponse = [
     {
         "Title": "Test Love.",
         "Year": "2011",
         "imdbID": "tt1570728",
         "Type": "movie",
         "Poster": "test Poster"
-    },
+    }
   ];
 
+  let spyGetFromCache: any;
+
   beforeEach(() => {
-    nock(constants.MOVIE_URL)
-      .get('/')
+    nock(constants.MOVIE_BASE_URL)
+      .persist()
+      .get("/")
       .query(true)
-      .reply(200, { "Search": expectedResposnse});
+      .reply(200, { "Search": expectedResponse});
+
+    spyGetFromCache = jest.spyOn(cacheModule, "getFromCache");
   });
 
   afterEach(() => {
     server.close();
     nock.cleanAll();
+    jest.clearAllMocks();
+    spyGetFromCache.mockRestore();
   });
 
   it("should return movies", async () => {
@@ -47,7 +58,8 @@ describe("Movies Test Suites", () => {
     const result = JSON.parse(response.text);
 
     expect(response.statusCode).toEqual(200);
-    expect(result.movies).toStrictEqual(expectedResposnse);
+    expect(result.movies[0]).toStrictEqual(expectedResponse[0]);
+    expect(result.movies[1]).toStrictEqual(expectedResponse[0]);
     expect(result.is_success).toBe(true);
   });
 
@@ -60,6 +72,19 @@ describe("Movies Test Suites", () => {
     };
    
     expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("should return data from cache", async () => {
+    await request(server).get("/movies?keyword=test");
+    await request(server).get("/movies?keyword=test");
+
+    expect(spyGetFromCache).toBeCalledTimes(1);
+  });
+
+  it("should not return data from cache", async () => {
+    await request(server).get("/movies?keyword=test2");
+
+    expect(spyGetFromCache).toBeCalledTimes(0);
   });
 });
 
