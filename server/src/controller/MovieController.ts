@@ -1,4 +1,4 @@
-import { Get, JsonController, QueryParam, Res, HttpCode } from "routing-controllers";
+import { Get, JsonController, QueryParam, Res } from "routing-controllers";
 import { Inject, Service } from "typedi";
 import { StatusCode } from "status-code-enum";
 
