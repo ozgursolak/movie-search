@@ -21,12 +21,14 @@ const App = () => {
 	};
 
 	useEffect(() => {
-    if(searchValue.length > 2)
-    {
-		setTimeout(() => {
-			getMovieRequest(searchValue);
-		}, 300);
-    }
+		if(searchValue.length > 2)
+		{
+			const timeoutId = setTimeout(() => {
+				getMovieRequest(searchValue);
+			}, 300);
+
+			return () => clearTimeout(timeoutId)
+		}
 	}, [searchValue]);
 
 	return (
