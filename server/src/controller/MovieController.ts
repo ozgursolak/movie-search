@@ -1,5 +1,6 @@
-import { Get, JsonController, QueryParam } from "routing-controllers";
+import { Get, JsonController, QueryParam, Res, HttpCode } from "routing-controllers";
 import { Inject, Service } from "typedi";
+import { StatusCode } from "status-code-enum";
 
 import { MovieResponse } from "../model/response/MovieResponse";
 import { MovieService } from '../service/MovieService';
@@ -13,22 +14,31 @@ export class MovieController {
 
   
   @Get('/movies')
-  async getMovies(@QueryParam("keyword") keyword: string): Promise<MovieResponse>
+  async getMovies(@QueryParam("keyword") keyword: string, @Res() response: any): Promise<MovieResponse>
   {
-    let response: MovieResponse;
+    let result: MovieResponse;
 
     if(!keyword || typeof keyword != "string")
     {
-      response = new MovieResponse();
+      result = new MovieResponse();
       
-      response.is_success = false;
-      response.message = "Invalid keyword type";
+      result.is_success = false;
+      result.message = "Invalid keyword type";
+
+      response.status(StatusCode.ClientErrorBadRequest);
     }
     else
     {
-      response = await this.movieService.getMovies(keyword.trim());
+      result = await this.movieService.getMovies(keyword.trim());
+
+      if(!result.is_success)
+      {
+        response.status(StatusCode.ServerErrorInternal);
+      }
+
+      response.status(StatusCode.SuccessOK);
     }
-    
-    return response;
+
+    return response.send(result);
   }
 }
