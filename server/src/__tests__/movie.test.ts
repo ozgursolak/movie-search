@@ -5,8 +5,6 @@ const nock = require("nock");
 import { server } from "../index";
 import { constants } from "../constant/Constant";
 import * as cacheModule from "../cache/Cache";
-import { Method } from "axios";
-
 
 describe("Health Check Test Suites", () => {
   
