@@ -2,7 +2,7 @@ import axios from "axios";
 import { Service } from "typedi";
 
 import { constants } from "../constant/Constant";
-import { addCache, existsInCache, getFromCache } from "../cache/Cache";
+import { addCache, existsInCache, getFromCache, flushCache } from "../cache/Cache";
 import { MovieResponse } from "../model/response/MovieResponse";
 
 @Service()
@@ -39,6 +39,10 @@ export class MovieService {
         }
 
         return this.serializeResponseForClient(movies, errorMessage);
+    }
+
+    flushCache(): void {
+        flushCache();
     }
 
     serializeResponseForClient(movies: Array<object>, errorMessage: string): MovieResponse

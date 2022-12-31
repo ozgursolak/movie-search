@@ -18,5 +18,5 @@ export function existsInCache(key: string): boolean
 
 export function flushCache(): void
 {
-    return cache.flushAll();
+    cache.flushAll();
 }

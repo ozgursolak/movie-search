@@ -52,7 +52,7 @@ describe("Movies Test Suites", () => {
 
   it("should return movies", async () => {
     
-    const response = await request(server).get("/movies?keyword=love");
+    const response = await request(server).get("/api/movies?keyword=love");
     const result = JSON.parse(response.text);
 
     expect(response.statusCode).toEqual(200);
@@ -62,7 +62,7 @@ describe("Movies Test Suites", () => {
   });
 
   it("should return false for invalid keyword", async () => {
-    const response = await request(server).get("/movies?keywor=test");
+    const response = await request(server).get("/api/movies?keywor=test");
     const result = JSON.parse(response.text);
     const expectedResult = {
       "is_success": false,
@@ -73,14 +73,14 @@ describe("Movies Test Suites", () => {
   });
 
   it("should return data from cache", async () => {
-    await request(server).get("/movies?keyword=test");
-    await request(server).get("/movies?keyword=test");
+    await request(server).get("/api/movies?keyword=test");
+    await request(server).get("/api/movies?keyword=test");
 
     expect(spyGetFromCache).toBeCalledTimes(1);
   });
 
   it("should not return data from cache", async () => {
-    await request(server).get("/movies?keyword=test2");
+    await request(server).get("/api/movies?keyword=test2");
 
     expect(spyGetFromCache).toBeCalledTimes(0);
   });

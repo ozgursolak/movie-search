@@ -5,7 +5,7 @@ import { StatusCode } from "status-code-enum";
 import { MovieResponse } from "../model/response/MovieResponse";
 import { MovieService } from '../service/MovieService';
 
-@JsonController()
+@JsonController("/api")
 @Service()
 export class MovieController {
 
@@ -13,7 +13,7 @@ export class MovieController {
   private movieService: MovieService;
 
   
-  @Get('/movies')
+  @Get("/movies")
   async getMovies(@QueryParam("keyword") keyword: string, @Res() response: any): Promise<MovieResponse>
   {
     let result: MovieResponse;
@@ -40,5 +40,13 @@ export class MovieController {
     }
 
     return response.send(result);
+  }
+
+  @Get("/clear")
+  flushCache(): boolean
+  {
+    this.movieService.flushCache();
+
+    return true;
   }
 }
