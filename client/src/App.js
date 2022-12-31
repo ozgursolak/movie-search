@@ -20,7 +20,7 @@ const App = () => {
 
 	const getMovieRequest = useCallback(
 		async (searchValue) => {
-		const url = `http://0.0.0.0:${process.env.REACT_APP_SERVER_PORT}/movies?keyword=${searchValue}`;
+		const url = `http://0.0.0.0:${process.env.REACT_APP_SERVER_PORT}/api/movies?keyword=${searchValue}`;
 		const response = await fetch(url);
 		const responseJson = await response.json();
 
